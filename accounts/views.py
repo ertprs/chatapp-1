@@ -176,6 +176,9 @@ def signup(request):
 
 def login(request):
     user = request.user
+    if user.is_authenticated:
+        return redirect('/')
+
     if request.method == 'POST':
         #form = AuthenticationForm(request.POST)
         username = request.POST['username']
@@ -186,12 +189,10 @@ def login(request):
             auth.login(request, user)
             return redirect('/')
 
-    if user.is_authenticated:
-        return redirect('/')
-
+        else:
+            messages.error(request, "This account doesn't exist, Please sign up")
 
     form = LoginForm()
-
     return render(request, 'login.html', {'form': form})
 
 @receiver(user_logged_in)

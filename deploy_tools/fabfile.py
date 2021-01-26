@@ -38,7 +38,7 @@ def _update_settings(source_folder, site_name):
     sed(settings_path, "DEBUG = True", "DEBUG = False")
     sed(settings_path,
         'ALLOWED_HOSTS = .+$',
-        f'ALLOWED_HOSTS = ["{site_name}"]'
+        f'ALLOWED_HOSTS = ["167.71.51.129", "{site_name}", "www.chatsapp.site"]'
     )
     secret_key_file = source_folder + '/chatapp/secret_key.py'
     if not exists(secret_key_file):

@@ -1,8 +1,23 @@
+#login-page {
+    width: 50%;
+}
+
+#signup-page {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    #login-page {
+        width: 100%;
+    }
+
+    #signup-page {
+        width: 100%;
+    }
+}
+
 
 #signInUsername {
     color: #382D2D;
 }
 
-.container {
-    width: 50px;
-}

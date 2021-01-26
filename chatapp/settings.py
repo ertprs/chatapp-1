@@ -151,7 +151,7 @@ MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'media'))
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 # EMAIL_USE_TLS = True
 
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 ASGI_APPLICATION = 'chatapp.asgi.application'
 CHANNEL_LAYERS = {
     'default': {

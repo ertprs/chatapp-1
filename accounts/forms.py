@@ -18,12 +18,12 @@ class LoginForm(forms.models.ModelForm):
         widgets = {
             'username': forms.fields.TextInput(attrs={
                 'placeholder': "Username",
-                'class': '',
+                'class': 'mt-4',
                 'id': '',
             }),
             'password': forms.PasswordInput(attrs={
                 'placeholder': "Password",
-                'class': '',
+                'class': 'mt-5',
             }),
         }
         labels = {

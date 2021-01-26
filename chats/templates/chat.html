@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block second %}
+
     <div class="container bg-light" id="chat-page">
         <div>
         <div class="d-flex" id="page-head">
@@ -74,41 +75,50 @@
 
 
     <script type="text/javascript">
-        let first = document.getElementById("first");
-        let second = document.getElementById("second");
-        let main = document.getElementById("main");
-        let m = window.matchMedia('(max-width: 768px)');
-        if (m.matches) {
-            first.style.width = "0";
-            first.style.zIndex = "1";
-            first.style.position = "fixed";
-            first.style.height = "100%";
-            first.style.top = "0";
-            first.style.left = "0";
-            first.style.backgroundColor = "#111";
-            first.style.overflowX = "hidden";
-            first.style.transition = "0.1s";
-            first.style.paddingTop = "40px";
-
-            function openNav() {
-                if (first.style.visibility == "hidden") {
-                    first.style.visibility = "visible";
-                    first.style.width = "250px";
-                }
-                else {
-                    first.style.visibility = "hidden";
-                    first.style.width = "0";
-                }
-            }
-
-        }
-
-        else {
+        function window_respond(m) {
+            let first = document.getElementById("first");
+            let second = document.getElementById("second");
+            let third = document.getElementById("third");
             let main = document.getElementById("main");
-            document.getElementById("first").style.width = "40%";
-            main.style.display = "flex";
+            if (m.matches) {
+                third.style.width = "0";
+                first.style.width = "0";
+                first.style.zIndex = "1";
+                first.style.position = "fixed";
+                first.style.height = "100%";
+                first.style.top = "0";
+                first.style.left = "0";
+                first.style.backgroundColor = "#111";
+                first.style.overflowX = "hidden";
+                first.style.transition = "0.1s";
+                first.style.paddingTop = "40px";
 
+            }
+            else {
+                main.style.display = "flex";
+                first.style.width = "20%";
+                second.style.width = "40%";
+                third.style.width = "40%";
+
+            }
         }
+
+        function openNav() {
+            if (first.style.visibility == "hidden") {
+                first.style.visibility = "visible";
+                first.style.width = "250px";
+            }
+            else {
+                first.style.visibility = "hidden";
+                first.style.width = "0";
+            }
+        }
+
+        const m = window.matchMedia("(max-width: 768px)")
+        window_respond(m)
+        m.addListener(window_respond)
+
+
     </script>
 
 

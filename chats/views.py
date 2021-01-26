@@ -180,7 +180,7 @@ def friends(request):
 
     context = {
         'user': user,
-        'friends_requests': friend_requests,
+        #'friends_requests': friend_requests,
         'friends': friends_list,
         'friend_requests_list': friend_requests_list,
     }
