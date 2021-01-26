@@ -1,0 +1,155 @@
+{% extends 'chat.html' %}
+
+{% load static %}
+
+{% block third %}
+
+    <div class="chat-message-container">
+        <div class="mt-2 d-flex" id="chat-top">
+            <img src="{{ friend.picture.pic.url }}" class="img-fluid">
+            <div class="d-flex">
+                <div class="" id="chat-username">
+                    <span class="fw-bold" id="">{{ friend.username|title }}</span>
+                    {% if friend.profile.is_online %}
+                        <span class="text-muted">Online</span>
+                    {% else %}
+                        <span class="text-muted">Offline</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div id="chat-log" class="messages bg-light">
+            {% for message in messages %}
+                {% if message.user.username == thread.user.username %}
+                        <p class="out-box" id="mess">{{ message }}</p>
+<!--                        {{ message.date }}-->
+                {% else %}
+                        <p class="in-box">{{ message }}</p>
+<!--                        {{ message.date }}-->
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="mt-3" id="chat-input">
+            <input id="id_chat" name="text" type="text" class="border-0 bg-light" placeholder="Write your message..." required="required" maxlength="50">
+            <button id="submit" type="submit" class="btn btn-outline-success border-0 h-100" value="">
+                <i class="bi bi-cursor-fill"></i>
+            </button>
+
+        </div>
+        {{ user.username|json_script:"user" }}
+        {{ thread.friend.username|json_script:"friend" }}
+    </div>
+
+{% endblock third %}
+
+{% block script %}
+
+    <script>
+        let m = window.matchMedia('(max-width: 768px)');
+        if (m.matches) {
+            document.getElementById("first").style.display = "none";
+            document.getElementById("second").style.display = "none";
+        }
+        else {
+            let main = document.getElementById("main");
+            document.getElementById("first").style.width = "40%";
+            main.style.display = "flex";
+        }
+    </script>
+    <script type="text/javascript">
+
+
+        const chatSocket = new WebSocket(
+            (window.location.protocol == 'https' ? 'wss://' : 'ws://')
+            + window.location.host
+            + ':8001'
+            /*+ '/ws' */
+            + window.location.pathname
+        );
+        const currentUser = JSON.parse(document.getElementById('user').textContent);
+
+        chatSocket.onopen = function(e) {
+            let chat_log = document.getElementById('chat-log');
+            chat_log.scrollTop = chat_log.scrollHeight;
+        }
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+
+            let division = document.getElementById('third');
+            let chat_log = document.getElementById('chat-log');
+            let para = document.createElement('p');
+
+            const textdata = document.createTextNode(data.message);
+            if (data.username == currentUser) {
+                para.className = 'out-box';
+                para.style.color = 'black';
+                para.style.display = 'block';
+                para.style.padding = '0.5em';
+                para.style.border = '2px';
+                para.style.width = 'auto';
+                para.style.height = 'auto';
+                para.style.float = 'right';
+                para.style.marginTop = '2px';
+                para.style.marginLeft = '60%';
+                para.style.borderRadius = '10px';
+                para.style.background = '#FFFFFF';
+                para.style.fontFamily = "'Open Sans', sans-serif";
+                para.style.fontSize = '0.8em';
+
+
+
+            } else {
+                para.className = 'in-box';
+                para.style.color = 'white';
+                para.style.display = 'block';
+                para.style.padding = '0.5em';
+                para.style.border = '2px';
+                para.style.width = 'auto';
+                para.style.height = 'auto';
+                para.style.float = 'left';
+                para.style.marginTop = '2px';
+                para.style.marginRight = '60%';
+                para.style.borderRadius = '10px';
+                para.style.background = '#23202e';
+                para.style.fontFamily = "'Open Sans', sans-serif";
+                para.style.fontSize = '0.8em';
+
+
+            }
+            para.appendChild(textdata);
+            chat_log.appendChild(para);
+            chat_log.scrollTop = chat_log.scrollHeight;
+
+
+            $('#chat-people-section').load(location.href+" #chat-people-section>*");
+
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#id_chat').focus();
+        document.querySelector('#id_chat').onkeyup = function(e) {
+            if (e.keyCode === 13) {
+                document.querySelector('#submit').click();
+            }
+        };
+
+        document.querySelector('#submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#id_chat');
+            const message = messageInputDom.value;
+            const username = JSON.parse(document.getElementById('user').textContent);
+
+            if (message != '') {
+                chatSocket.send(JSON.stringify({
+                    'message': message,
+                    'username': username
+                }));
+            };
+            messageInputDom.value = '';
+        };
+     </script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'my_profile.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block third %}
+    <div class="container" id="settings-page">
+        <div class="fw-bold mt-2">Settings</div>
+        <p class="text-muted">Update your profile details</p>
+        <hr>
+        <div class="d-flex flex-row shadow-lg p-3 mb-3 bg-white rounded" id="settings-card">
+            <div class="card me-2 w-50 testing-card" id="">
+                <div class="card-body">
+                    <div class="p-2 fw-bold">Account</div>
+                    <div class="p-2 mt-0 text-muted">Update your profile details</div>
+                </div>
+<!--                <hr>-->
+                {% if messages %}
+                    <div class="row">
+                         <div class="col-md-8">
+                             {% for message in messages %}
+                                {% if message.level_tag == 'success' %}
+                                    <div class="p-2 alert alert-success">{{ message }}</div>
+                                {% else %}
+                                    <div class="alert alert-warning">{{ message }}</div>
+                                {% endif %}
+                             {% endfor %}
+                         </div>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form1|crispy }}
+
+                        <button class="btn btn-primary mt-4 mb-3 form-control" type="submit">Save Preferences</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card me-2 w-50 testing-card">
+                <div class="card-body">
+                    <div class="p-2 fw-bold">Security</div>
+                    <div class="p-2 text-muted">Update your profile details</div>
+                </div>
+<!--                <hr>-->
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form2|crispy }}
+
+                      <button type="submit" class="btn btn-primary mt-4 mb-3 form-control" disabled>Change Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock third %}
+
+
+{% block script %}
+    <script type="text/javascript">
+        let m = window.matchMedia('(max-width: 768px)');
+        if (m.matches) {
+            document.getElementById("first").style.display = "none";
+            document.getElementById("second").style.display = "none";
+        }
+
+        else {
+            document.getElementById("main").style.display = "flex";
+            document.getElementById("first").style.width = "40%";
+        }
+    </script>
+{% endblock script %}

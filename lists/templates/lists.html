@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-3 me-auto text-center w-50">
+        <table id="id_list_table" class="table table-striped">
+            <tr><th>Lists</th></tr>
+            {% for list in lists %}
+                {% if list.item_set.all.count != 0 %}
+                    <tr><td>
+                        <div class="float-start">
+                            <a href="{% url 'list_detail' list.id %}">{{ list.item_set.first }}</a>
+                        </div>
+                        <div class="float-end">
+                            <div class="text-muted">{{ list.date }}</div>
+                            <div>
+                                <a href="{% url 'delete_list' list.id %}">
+                                    <button type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"></span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </td></tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock content %}

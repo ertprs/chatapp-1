@@ -1,0 +1,115 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block second %}
+    <div class="container bg-light" id="chat-page">
+        <div>
+        <div class="d-flex" id="page-head">
+                <div class="fw-bold p-3 flex-grow-1">
+                    <p><span id="back-icon"><i class="bi bi-chevron-left"></i></span>Chats</p>
+                </div>
+                <div class="" id="openNav" style="font-size:30px;cursor:pointer" onclick="openNav()">
+                    <i class="bi bi-list"></i>
+                </div>
+        </div>
+
+        <form method="POST" action="{% url 'search_for_friends' %}">
+            {% csrf_token %}
+            <div class="input-group mt-2">
+                <input name="search" type="text" class="form-control form-control border-0" placeholder="Search for users..." aria-label="Search for messages or users...">
+                <div class="input-group-append">
+                    <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="container d-flex mt-3" id="chat-active-members">
+            {% for people in friends %}
+                <div class="me-5 text-center">
+                    <img src="{{ people.friend.picture.pic.url }}" class="img-fluid">
+                    <p class="text-muted" id="chat-username">{{ people.friend.username }}</p>
+                </div>
+            {% endfor %}
+
+        </div>
+        </div>
+        <div class="chat-section shadow-lg p-3 mb-5 bg-white rounded" id="chat-people-section">
+            {% if user.is_authenticated %}
+                {% for thread in friends %}
+                    <a href="{% url 'chat_message' thread.id %}" class="">
+                        <div class="d-flex flex-row">
+                            <img src="{{ thread.friend.picture.pic.url }}"
+                                 class="img-fluid" style="width:60px;height:60px;">
+                            <div class="chat-message-info-section" id="chat-message-info-section">
+                                <div class="d-flex justify-content-between ms-2">
+                                    <div class="me-5 friends fw-bold" id="last-message-friend">{{ thread.friend.username }}</div>
+                                    <div class="ms-5 text-muted"></div>
+                                </div>
+                                <p class="p-2 text-muted flex-grow-1 last-message" id="last-message">{{ thread.chatmessage_set.all.last|truncatechars:15 }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+
+
+
+{% endblock second %}
+
+{% block third %}
+    <div class="">
+
+    </div>
+
+{% endblock third %}
+{% block script %}
+
+
+
+    <script type="text/javascript">
+        let first = document.getElementById("first");
+        let second = document.getElementById("second");
+        let main = document.getElementById("main");
+        let m = window.matchMedia('(max-width: 768px)');
+        if (m.matches) {
+            first.style.width = "0";
+            first.style.zIndex = "1";
+            first.style.position = "fixed";
+            first.style.height = "100%";
+            first.style.top = "0";
+            first.style.left = "0";
+            first.style.backgroundColor = "#111";
+            first.style.overflowX = "hidden";
+            first.style.transition = "0.1s";
+            first.style.paddingTop = "40px";
+
+            function openNav() {
+                if (first.style.visibility == "hidden") {
+                    first.style.visibility = "visible";
+                    first.style.width = "250px";
+                }
+                else {
+                    first.style.visibility = "hidden";
+                    first.style.width = "0";
+                }
+            }
+
+        }
+
+        else {
+            let main = document.getElementById("main");
+            document.getElementById("first").style.width = "40%";
+            main.style.display = "flex";
+
+        }
+    </script>
+
+
+{% endblock script %}

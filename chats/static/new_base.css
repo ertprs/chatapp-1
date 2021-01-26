@@ -1,0 +1,194 @@
+#upload-icon {
+    position: relative;
+}
+#back-icon {
+    margin-right: 15px;
+}
+
+
+@media screen and (max-width: 768px) {
+    #first {
+        visibility: hidden;
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    #openNav {
+        display: none;
+    }
+    #back-icon {
+        display: none;
+    }
+
+}
+
+#triality {
+    font-size: 12px;
+}
+.list-group-item {
+    margin-top: -10px;
+}
+.list-1 {
+    margin-bottom: 10px;
+}
+#page-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#profile-image {
+    display: block;
+    text-align: center;
+    height: 80px;
+    width: 80px;
+}
+
+.bi-upload {
+    margin-top: 2px;
+
+}
+
+.chat-section {
+    height: 500px;
+    overflow-y: auto;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+#chat-username {
+    margin-left: 20%;
+}
+
+#time {
+
+}
+.img-fluid {
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+
+.out-box {
+    display: block;
+    padding: 0.5em;
+    border: 2px;
+    width: auto;
+    height: auto;
+    float: right;
+    margin-top: 2px;
+    margin-left: 60%;
+    border-radius: 10px;
+    background: #FFFFFF;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.8em;
+    color: black;
+}
+
+.in-box {
+    display: block;
+    padding: 0.5em;
+    border: 2px;
+    width: auto;
+    float: left;
+    margin-top: 2px;
+    margin-right: 60%;
+    border-radius: 10px;
+    background: #23202e;
+    height: auto;
+    font-size: 0.8em;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+#chat-top {
+    height: 50px;
+}
+#chat-log {
+    height: calc(100% - 100px);
+    overflow-y: auto;
+}
+
+#chat-input {
+    border: none;
+    height: 50px;
+    /* position: fixed; */
+}
+
+.testing-card {
+    border: none;
+}
+
+#id_chat {
+    width: 80%;
+    height: 50px;
+
+}
+
+#profile-page {
+    height: 600px;
+    overflow-y: scroll;
+}
+
+#friends-page {
+    height: 600px;
+    overflow-y: auto;
+}
+#chat-page {
+    height: 600px;
+    overflow-y: auto;
+
+    /*overflow-y: scroll; */
+}
+.home-page {
+    height: 600px;
+    overflow: auto;
+}
+#settings-page {
+    height: 600px;
+    overflow: auto;
+}
+
+.chat-message-container {
+    height: 600px;
+
+}
+
+input[type="text"], input[type="password"], textarea, select {
+    outline: none;
+}
+
+.icon {
+    color: #515557;
+
+}
+
+#friends-section {
+    height: 300px;
+    overflow-y: auto;
+
+}
+#friend-requests-section {
+    height: 300px;
+    overflow-y: auto;
+}
+
+#chat-active-members {
+    width: 80%;
+    overflow-x: auto;
+}
+
+#profile-description {
+
+}
+
+.fw-bold {
+    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Sans', sans-serif;
+}

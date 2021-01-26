@@ -1,0 +1,161 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block second %}
+
+{% if user.is_authenticated %}
+<div class="container bg-light" id="profile-page">
+    <div class="">
+        <div class="" id="page-head">
+            <div class="fw-bold p-3">
+                <p><span id="back-icon"><i class="bi bi-chevron-left"></i></span>Profile</p>
+            </div>
+            <div class="" id="openNav" style="font-size:30px;cursor:pointer" onclick="openNav()">
+                <i class="bi bi-list"></i>
+            </div>
+        </div>
+        <form method="POST" action="{% url 'search_for_friends' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="search" class="form-control form-control" placeholder="Search for users..." aria-label="Search for messages or users...">
+                <div class="input-group-append">
+                    <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card mt-3 shadow p-3 mb-5 bg-white rounded" id="profile-description">
+        <div class="card-body text-center mt-2" id="profile-top">
+            <a type="button" class="btn" id="btn-pic" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm">
+                <div id="upload-icon">
+                    <img src="{{ user.picture.pic.url }}" id="profile-image" class="img-fluid">
+                    <div class="badge bg-secondary mt-2"><i class="bi bi-upload"></i></div>
+                </div>
+            </a>
+            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="container">
+                            <form method="POST" action="{% url 'upload' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form }}
+                                <div class="form-group">
+<!--                                    <label for="exampleFormControlFile1">Change profile picture</label>-->
+<!--                                    <input type="file" name="pic" class="form-control-file" id="exampleFormControlFile1">-->
+                                    <button class="btn btn-light">upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 fw-bold mt-2">{{ user.username|title }}</div>
+            <p class="text-muted">{{ user.preferences.bio }}</p>
+
+        </div>
+    </div>
+
+    <div class="card mt-3 shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <div class="text-muted">Country</div>
+            <div class=""></div>
+            <span class=""><hr></span>
+        </div>
+        <div class="card-body">
+            <div class="text-muted">Phone</div>
+            <div class=""></div>
+            <span class=""><hr></span>
+        </div>
+        <div class="card-body">
+            <div class="text-muted">Email</div>
+            <div class="">{{ user.preferences.email }}</div>
+            <span class=""><hr></span>
+        </div>
+        <div class="card-body">
+            <div class="text-muted">Time</div>
+            <div class="">10.00am</div>
+        </div>
+    </div>
+
+    <div class="card mt-3 shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <div class="text-muted">Twitter</div>
+            <span class=""><hr></span>
+        </div>
+        <div class="card-body">
+            <div class="text-muted">Facebook</div>
+            <span class=""><hr></span>
+        </div>
+        <div class="card-body">
+            <div class="text-muted">Github</div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between shadow p-3 mb-5 bg-white rounded">
+        <a href="{% url 'settings' %}">
+            <div class="card mt-3">
+                <div class="card-body">
+                    Settings
+                </div>
+            </div>
+        </a>
+        <div class="card mt-3">
+            <a href="{% url 'delete_account' %}">
+                <div class="card-body">
+                    Delete account
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endif %}
+{% endblock second %}
+
+{% block script %}
+    <script type="text/javascript">
+
+        let m = window.matchMedia('(max-width: 700px)');
+        if (m.matches) {
+            first.style.width = "0";
+            first.style.zIndex = "1";
+            first.style.position = "fixed";
+            first.style.height = "100%";
+            first.style.top = "0";
+            first.style.left = "0";
+            first.style.backgroundColor = "#111";
+            first.style.overflowX = "hidden";
+            first.style.transition = "0.1s";
+            first.style.paddingTop = "40px";
+
+            function openNav() {
+
+                if (first.style.visibility == "hidden") {
+                    first.style.visibility = "visible";
+                    first.style.width = "250px";
+                }
+                else {
+                    first.style.visibility = "hidden";
+                    first.style.width = "0";
+                }
+            }
+        }
+
+        else {
+            let main = document.getElementById("main");
+            document.getElementById("first").style.width = "40%";
+            main.style.display = "flex";
+        }
+
+        let pic_button = document.getElementById('btn-pic');
+
+        if (a.matches) {
+            pic_button.innerHTML = "change pic";
+        }
+    </script>
+
+{% endblock script %}

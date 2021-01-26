@@ -1,0 +1,113 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block second %}
+     <div class="container bg-light" id="friends-page">
+        <div>
+            <div class="" id="page-head">
+                <div class="fw-bold p-3">
+                    <p><span id="back-icon"><i class="bi bi-chevron-left"></i></span>Friends</p>
+                </div>
+                <div class="" id="openNav" style="font-size:30px;cursor:pointer" onclick="openNav()">
+                    <i class="bi bi-list"></i>
+                </div>
+            </div>
+
+            <div class="search-results-section shadow-lg p-3 mb-5 bg-white rounded" id="friends-section">
+                <div class="card">
+                    {% if friends %}
+                        {% for friend in friends %}
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <img src="{{ friend.picture.pic.url }}" class="img-fluid">
+                                    <p class="p-2 fw-bold flex-grow-1">{{ friend.username|title }}</p>
+                                    <p class="p-2 text-muted">
+                                        <a href="{% url 'delete_friend' friend.id %}" class="icon delete-icon">
+                                            delete
+                                            <i class="bi bi-person-x-fill"></i>
+                                        </a>
+                                    </p>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-muted p-3">
+                            <p>You have no friends</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="p-2 fw-bold">
+                <p>Friend Requests</p>
+            </div>
+
+            <div class="friend-requests-section mb-3 shadow-lg p-3 mb-5 bg-white rounded" id="friend-requests-section">
+                <div class="card">
+                    {% if friend_requests_list %}
+                        {% for friend in friend_requests_list %}
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <img src="{{ friend.picture.pic.url }}" class="img-fluid">
+                                    <p class="p-2 fw-bold flex-grow-1">{{ friend.username|title }}</p>
+                                    <p class="p-2 text-muted">
+                                        <a href="{% url 'accept_request' friend.id %}" class="icon delete-icon">
+                                            accept
+                                            <i class="bi bi-person-check-fill"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-muted p-3">
+                            <p>You have no friend request</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+     </div>
+
+
+{% endblock second %}
+
+{% block script %}
+    <script type="text/javascript">
+        let m = window.matchMedia('(max-width: 700px)');
+        if (m.matches) {
+            first.style.width = "0";
+            first.style.zIndex = "1";
+            first.style.position = "fixed";
+            first.style.height = "100%";
+            first.style.top = "0";
+            first.style.left = "0";
+            first.style.backgroundColor = "#111";
+            first.style.overflowX = "hidden";
+            first.style.transition = "0.1s";
+            first.style.paddingTop = "40px";
+
+            function openNav() {
+
+                if (first.style.visibility == "hidden") {
+                    first.style.visibility = "visible";
+                    first.style.width = "250px";
+                }
+                else {
+                    first.style.visibility = "hidden";
+                    first.style.width = "0";
+                }
+            }
+        }
+
+        else {
+            let main = document.getElementById("main");
+            document.getElementById("first").style.width = "40%";
+            main.style.display = "flex";
+        }
+
+    </script>
+{% endblock script %}
+
