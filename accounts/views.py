@@ -159,17 +159,18 @@ def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username'].lower()
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
-            validate_password(password2)
+            username = form.cleaned_data['username']
+            # password1 = form.cleaned_data['password1']
+            # password2 = form.cleaned_data['password2']
+            # validate_password(password2)
+            if bool(User.objects.all().filter(username=username.lower())):
+                messages.error(request, "Username is already taken")
 
-            User.objects.create_user(username=username, password=password1, is_active=True)
-            obj = User.objects.get(username=username)
-            Picture.objects.create(user=obj)
+            else:
+                new_user_obj = form.save()
+                Picture.objects.create(user=new_user_obj)
 
-
-            return redirect('login')
+                return redirect('login')
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -232,16 +233,6 @@ def my_profile(request):
     else:
         return render(request, 'my_profile.html', {'form': form})
 
-    # user = request.user
-    # #user.picture.pic.name =
-    # #pic_obj = Picture.objects.get(user=user)
-    #
-    #
-    # # obj = Picture.objects.all().filter(user=user)
-    # # if obj:
-    # #     pic_obj = Picture.objects.get(user=user)
-    # #     pic = pic_obj.pic
-    # return render(request, 'my_profile.html', {'form': form})
 
 
 
