@@ -70,7 +70,6 @@ def _update_database(source_folder):
 def deploy():
     site_folder = f'/home/{env.user}/sites/{env.host}'
     source_folder = site_folder + '/chatapp'
-    #_run_ssh_to_root()
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, env.host)
@@ -79,8 +78,4 @@ def deploy():
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
-
-    #
-    #_update_chats/routing.py() removing 'ws' prefix
-    #_update_chats/templates/chat_message.html() removing 'ws' in newWebsocket
 

@@ -1,9 +1,7 @@
-import asyncio
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer, JsonWebsocketConsumer
-from channels.consumer import SyncConsumer
-from django.contrib.auth.models import User
+
 from .models import ChatThread, ChatMessage
 
 
@@ -58,50 +56,5 @@ class ChatConsumer(WebsocketConsumer):
         }))
 
 
-
-class TicksSyncConsumer(WebsocketConsumer):
-
-    def connect(self):
-        self.user = self.scope['user']
-        self.room_group_name = "chiks"
-
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-        self.accept()
-
-
-
-    def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-
-    def receive(self, text_data=None):
-        self.send(text_data="hey Chi")
-
-    def last_message(self, event):
-        #event['message'] = 'chiks'
-        #message = 'chiks'
-
-        self.send({
-            'text': event['content']
-        })
-
-
-
-    # def new_ticks(self, event):
-    #     # data = {}
-    #     # for thread in self.user.outbox.all():
-    #     #     last_message = thread.chatmessage_set.all().last()
-    #     #
-    #     #     data[last_message.thread.friend.username] = last_message.text
-    #     self.send({
-    #         'type': 'websocket.send',
-    #         'text': event['content'],
-    #     })
 
 
